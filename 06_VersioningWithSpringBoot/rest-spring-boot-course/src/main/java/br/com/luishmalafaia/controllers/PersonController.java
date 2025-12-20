@@ -1,0 +1,75 @@
+package br.com.luishmalafaia.controllers;
+
+import br.com.luishmalafaia.data.dto.v1.PersonDTO;
+import br.com.luishmalafaia.data.dto.v2.PersonDTOV2;
+import br.com.luishmalafaia.services.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/person")
+public class PersonController {
+
+    @Autowired
+    private PersonService service;
+
+    // [GET] http://localhost:8080/person/1
+    @GetMapping(
+        value = "/{id}",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonDTO findById(@PathVariable("id") Long id){
+        return service.findById(id);
+    }
+
+    // [GET] http://localhost:8080/person
+    @GetMapping(
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public List<PersonDTO> findAll(){
+        return service.findAll();
+    }
+
+    // [POST] http://localhost:8080/person
+    @PostMapping(
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonDTO create(@RequestBody PersonDTO person){
+        return service.create(person);
+    }
+
+    // [POST] http://localhost:8080/person
+    @PostMapping(
+            value = "/v2",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonDTOV2 create(@RequestBody PersonDTOV2 person){
+        return service.createV2(person);
+    }
+
+    // [PUT] http://localhost:8080/person
+    @PutMapping(
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonDTO update(@RequestBody PersonDTO person){
+        return service.update(person);
+    }
+
+    // [DELETE] http://localhost:8080/person/1
+    @DeleteMapping(
+        value = "/{id}"
+    )
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+        service.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+}
