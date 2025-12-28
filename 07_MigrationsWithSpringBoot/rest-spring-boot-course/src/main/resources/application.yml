@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: rest-spring-boot-course
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost\SQL_LOCAL;databaseName=course_spring_boot;useTimezone=true;serverTimezone=UTC;trustServerCertificate=true
+    username: sa
+    password: luishmalafaia@SP
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+    show-sql: true
+logging:
+  level:
+    br.com.luishmalafaia: DEBUG
